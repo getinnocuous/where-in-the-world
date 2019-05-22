@@ -35,15 +35,6 @@ a {
   color: inherit;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 75px;
-  width: 100%;
-  max-width: 1280px;
-  margin: 5rem auto 0;
-}
-
 /* Dark Blue (Dark Mode Elements): hsl(209, 23%, 22%)
 Very Dark Blue (Dark Mode Background): hsl(207, 26%, 17%)
 Very Dark Blue (Light Mode Text): hsl(200, 15%, 8%)

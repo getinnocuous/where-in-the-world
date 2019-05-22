@@ -49,7 +49,6 @@ const StyledCountryCardDetailsItem = styled.li`
 
 const CountryCard = props => {
   const { countryDetails } = props;
-  console.log(countryDetails);
   return (
     <Link to={`/country/${props.countryCode}`}>
       <StyledCountryCard>
@@ -61,7 +60,7 @@ const CountryCard = props => {
           <StyledCountryCardDetails>
             {countryDetails.map(detail => {
               return (
-                <StyledCountryCardDetailsItem>
+                <StyledCountryCardDetailsItem key={detail.key}>
                   <b>{detail.key}:</b>{' '}
                   {detail.number
                     ? detail.val.toLocaleString('en-GB')
