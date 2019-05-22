@@ -24,7 +24,7 @@ const ToggleThemeButton = () => {
     darkMode
       ? (document.body.dataset.theme = 'dark')
       : (document.body.dataset.theme = 'light');
-  });
+  }, [darkMode]);
 
   return (
     <StyledToggleThemeButton onClick={() => setDarkMode(!darkMode)}>

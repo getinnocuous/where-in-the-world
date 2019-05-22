@@ -7,11 +7,24 @@ const CountryCardGrid = props => {
       {props.countriesData.map(country => (
         <CountryCard
           key={country.alpha3Code}
+          countryCode={country.alpha3Code}
           countryFlag={country.flag}
           countryName={country.name}
-          countryCapital={country.capital}
-          countryRegion={country.region}
-          countryPopulation={country.population}
+          countryDetails={[
+            {
+              key: 'Population',
+              val: country.capital
+            },
+            {
+              key: 'Region',
+              val: country.region
+            },
+            {
+              key: 'Capital',
+              val: country.population,
+              number: true
+            }
+          ]}
         />
       ))}
     </section>

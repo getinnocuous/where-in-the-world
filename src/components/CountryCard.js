@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import prettifyURL from '../util/prettifyURL';
 
 const StyledCountryCard = styled.article`
   border-radius: 5px;
@@ -49,10 +48,10 @@ const StyledCountryCardDetailsItem = styled.li`
 `;
 
 const CountryCard = props => {
-  const prettyURL = prettifyURL(props.countryName);
-
+  const { countryDetails } = props;
+  console.log(countryDetails);
   return (
-    <Link to={prettyURL}>
+    <Link to={`/country/${props.countryCode}`}>
       <StyledCountryCard>
         <StyledCountryCardImagery>
           <img src={props.countryFlag} alt={`Flag of ${props.countryName}`} />
@@ -60,16 +59,16 @@ const CountryCard = props => {
         <StyledCountryCardInner>
           <StyledCountryCardTitle>{props.countryName}</StyledCountryCardTitle>
           <StyledCountryCardDetails>
-            <StyledCountryCardDetailsItem>
-              <b>Population:</b>{' '}
-              {props.countryPopulation.toLocaleString('en-GB')}
-            </StyledCountryCardDetailsItem>
-            <StyledCountryCardDetailsItem>
-              <b>Region:</b> {props.countryRegion}
-            </StyledCountryCardDetailsItem>
-            <StyledCountryCardDetailsItem>
-              <b>Capital:</b> {props.countryCapital}
-            </StyledCountryCardDetailsItem>
+            {countryDetails.map(detail => {
+              return (
+                <StyledCountryCardDetailsItem>
+                  <b>{detail.key}:</b>{' '}
+                  {detail.number
+                    ? detail.val.toLocaleString('en-GB')
+                    : detail.val}
+                </StyledCountryCardDetailsItem>
+              );
+            })}
           </StyledCountryCardDetails>
         </StyledCountryCardInner>
       </StyledCountryCard>
