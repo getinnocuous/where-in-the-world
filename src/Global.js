@@ -1,5 +1,5 @@
 const Global = {
-  API: 'https://restcountries.eu/rest/v2/all'
+  API: 'https://restcountries.eu/rest/v2'
 };
 
 export default Global;

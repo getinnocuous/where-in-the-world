@@ -7,6 +7,7 @@ const StyledCountryCard = styled.article`
   overflow: hidden;
   background: var(--elements);
   box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.03);
+  height: 100%;
 `;
 
 const StyledCountryCardImagery = styled.div`

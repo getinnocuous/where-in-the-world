@@ -6,10 +6,6 @@ const StyledCountryCardGrid = styled.section`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
-  max-width: 1280px;
-  margin: 5rem auto 0;
   @media screen and (min-width: 768px) {
     grid-gap: 20px;
     grid-template-columns: 1fr 1fr;
@@ -36,7 +32,8 @@ const CountryCardGrid = props => {
           countryDetails={[
             {
               key: 'Population',
-              val: country.capital
+              val: country.population,
+              number: true
             },
             {
               key: 'Region',
@@ -44,8 +41,7 @@ const CountryCardGrid = props => {
             },
             {
               key: 'Capital',
-              val: country.population,
-              number: true
+              val: country.capital
             }
           ]}
         />
