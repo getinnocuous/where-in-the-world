@@ -4,7 +4,7 @@
 }
 
 [data-theme] {
-  transition: all var(--easing);
+  transition: background-color var(--easing), color var(--easing);
 }
 
 [data-theme='light'] {

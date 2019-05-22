@@ -48,15 +48,15 @@ const StyledCountryCardDetailsItem = styled.li`
 `;
 
 const CountryCard = props => {
-  const { countryDetails } = props;
+  const { countryCode, countryName, countryFlag, countryDetails } = props;
   return (
-    <Link to={`/country/${props.countryCode}`}>
+    <Link to={`/country/${countryCode}`}>
       <StyledCountryCard>
         <StyledCountryCardImagery>
-          <img src={props.countryFlag} alt={`Flag of ${props.countryName}`} />
+          <img src={countryFlag} alt={`Flag of ${countryName}`} />
         </StyledCountryCardImagery>
         <StyledCountryCardInner>
-          <StyledCountryCardTitle>{props.countryName}</StyledCountryCardTitle>
+          <StyledCountryCardTitle>{countryName}</StyledCountryCardTitle>
           <StyledCountryCardDetails>
             {countryDetails.map(detail => {
               return (
