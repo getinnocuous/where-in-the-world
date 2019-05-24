@@ -32,7 +32,7 @@ const StyledCountryCardTitle = styled.h3`
   color: var(--text);
 `;
 
-const StyledCountryCardDetails = styled.ul`
+const StyledCountryCardDetails = styled.dl`
   font-size: 1.4rem;
   list-style: none;
   padding: 0;
@@ -40,12 +40,19 @@ const StyledCountryCardDetails = styled.ul`
   color: var(--text);
 `;
 
-const StyledCountryCardDetailsItem = styled.li`
+const StyledCountryCardDetail = styled.div`
   margin-bottom: 0.8rem;
+`;
+
+const StyledCountryCardDetailsItemKey = styled.dt`
+  font-weight: 600;
+  display: inline;
+`;
+
+const StyledCountryCardDetailsItemValue = styled.dd`
   font-weight: 300;
-  b {
-    font-weight: 600;
-  }
+  margin: 0;
+  display: inline;
 `;
 
 const CountryCard = props => {
@@ -61,12 +68,17 @@ const CountryCard = props => {
           <StyledCountryCardDetails>
             {countryDetails.map(detail => {
               return (
-                <StyledCountryCardDetailsItem key={detail.key}>
-                  <b>{detail.key}:</b>{' '}
-                  {detail.number
-                    ? detail.val.toLocaleString('en-GB')
-                    : detail.val}
-                </StyledCountryCardDetailsItem>
+                <StyledCountryCardDetail key={detail.key}>
+                  <StyledCountryCardDetailsItemKey>
+                    {detail.key}
+                    {': '}
+                  </StyledCountryCardDetailsItemKey>
+                  <StyledCountryCardDetailsItemValue>
+                    {detail.number
+                      ? detail.val.toLocaleString('en-GB')
+                      : detail.val}
+                  </StyledCountryCardDetailsItemValue>
+                </StyledCountryCardDetail>
               );
             })}
           </StyledCountryCardDetails>
