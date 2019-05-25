@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ToggleThemeButton from './ToggleThemeButton';
 
-const StyledNavbar = styled.nav`
+const StyledNavbar = styled.header`
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@ const StyledNavbar = styled.nav`
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 `;
 
-const StyledNavbarInner = styled.div`
+const StyledNavbarInner = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
