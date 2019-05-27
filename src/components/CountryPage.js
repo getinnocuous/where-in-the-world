@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Global from '../Global';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
+import CountriesContext from '../context/CountriesContext';
 import Button from './Button';
 
 const StyledCountryPage = styled.main`
@@ -41,38 +41,42 @@ const StyledCountryPageBorders = styled.div`
 `;
 
 const CountryPage = ({ match }) => {
-  const countryID = match.params.id;
-  const [country, setCountry] = useState([]);
+  const [country, setCountry] = useState({});
+  const countryID = match.params.id.toUpperCase();
+  const { countries, loadingData } = useContext(CountriesContext);
   useEffect(() => {
-    fetch(`${Global.API}/alpha/${countryID}`)
-      .then(resp => resp.json())
-      .then(data => {
-        setCountry(data);
-      });
-  }, [countryID]);
+    const selectedCountry = countries.findIndex(
+      country => country.alpha3Code === countryID
+    );
+    setCountry(countries[selectedCountry]);
+  }, [countries, countryID]);
   return (
     <React.Fragment>
       <Button to={'/'} text={'Home'} />
-      <StyledCountryPage>
-        <StyledCountryPageFlag>
-          <img src={country.flag} alt={`Flag of ${country.name}`} />
-        </StyledCountryPageFlag>
-        <StyledCountryPageDetails>
-          <StyledCountryPageHeading>{country.name}</StyledCountryPageHeading>
-          <StyledCountryPageBorders>
-            <p>Border countries:</p>
-            {country.borders
-              ? country.borders.map(border => (
+      {loadingData ? (
+        'Loading'
+      ) : (
+        <StyledCountryPage>
+          <StyledCountryPageFlag>
+            <img src={country.flag} alt={`Flag of ${country.name}`} />
+          </StyledCountryPageFlag>
+          <StyledCountryPageDetails>
+            <StyledCountryPageHeading>{country.name}</StyledCountryPageHeading>
+            {country.borders ? (
+              <StyledCountryPageBorders>
+                <p>Border countries:</p>
+                {country.borders.map(border => (
                   <Button
                     key={border}
                     to={`/country/${border}`}
                     text={border}
                   />
-                ))
-              : null}
-          </StyledCountryPageBorders>
-        </StyledCountryPageDetails>
-      </StyledCountryPage>
+                ))}
+              </StyledCountryPageBorders>
+            ) : null}
+          </StyledCountryPageDetails>
+        </StyledCountryPage>
+      )}
     </React.Fragment>
   );
 };

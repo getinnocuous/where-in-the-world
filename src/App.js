@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import CountriesContext from './context/CountriesContext';
 import Global from './Global';
+import UseFetch from './hooks/UseFetch';
 import CountryCardGrid from './components/CountryCardGrid';
 import Navbar from './components/Navbar';
 import CountryPage from './components/CountryPage';
@@ -9,29 +11,23 @@ import Page from './components/Page';
 import './styles/main.css';
 
 function App() {
-  const [countriesData, setCountriesData] = useState([]);
-  useEffect(() => {
-    fetch(`${Global.API}/all`)
-      .then(resp => resp.json())
-      .then(data => {
-        setCountriesData(data);
-        console.log(`Fetched endpoint: ${Global.API}`);
-      });
-  }, []);
+  const [countriesData, loadingData] = UseFetch(`${Global.API}/all`);
+
   return (
     <div className="App">
       <Router>
-        <Navbar />
-        <Page>
-          <Route
-            exact
-            path="/"
-            render={routeProps => (
-              <CountryCardGrid {...routeProps} countriesData={countriesData} />
-            )}
-          />
-          <Route path="/country/:id" component={CountryPage} />
-        </Page>
+        <CountriesContext.Provider
+          value={{
+            loadingData: loadingData,
+            countries: countriesData
+          }}
+        >
+          <Navbar />
+          <Page>
+            <Route exact path="/" component={CountryCardGrid} />
+            <Route path="/country/:id" component={CountryPage} />
+          </Page>
+        </CountriesContext.Provider>
       </Router>
     </div>
   );

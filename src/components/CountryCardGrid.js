@@ -1,6 +1,7 @@
-import React from 'react';
-import CountryCard from './CountryCard';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import CountriesContext from '../context/CountriesContext';
+import CountryCard from './CountryCard';
 
 const StyledCountryCardGrid = styled.section`
   display: grid;
@@ -20,10 +21,13 @@ const StyledCountryCardGrid = styled.section`
   }
 `;
 
-const CountryCardGrid = props => {
-  return (
+const CountryCardGrid = () => {
+  const { countries, loadingData } = useContext(CountriesContext);
+  return loadingData ? (
+    'Loading'
+  ) : (
     <StyledCountryCardGrid>
-      {props.countriesData.map(country => (
+      {countries.map(country => (
         <CountryCard
           key={country.alpha3Code}
           countryCode={country.alpha3Code}
