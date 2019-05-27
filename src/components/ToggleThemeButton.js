@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import ToggleTheme from '../hooks/ToggleTheme';
 
 const StyledToggleThemeButton = styled.button`
   all: unset;
@@ -18,13 +19,7 @@ const StyledToggleThemeButton = styled.button`
 `;
 
 const ToggleThemeButton = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    darkMode
-      ? (document.body.dataset.theme = 'dark')
-      : (document.body.dataset.theme = 'light');
-  }, [darkMode]);
+  const [darkMode, setDarkMode] = ToggleTheme(false);
 
   return (
     <StyledToggleThemeButton onClick={() => setDarkMode(!darkMode)}>
