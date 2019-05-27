@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Details from './Details';
 
 const StyledCountryCard = styled.article`
   border-radius: 5px;
@@ -32,29 +33,6 @@ const StyledCountryCardTitle = styled.h3`
   color: var(--text);
 `;
 
-const StyledCountryCardDetails = styled.dl`
-  font-size: 1.4rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  color: var(--text);
-`;
-
-const StyledCountryCardDetail = styled.div`
-  margin-bottom: 0.8rem;
-`;
-
-const StyledCountryCardDetailsItemKey = styled.dt`
-  font-weight: 600;
-  display: inline;
-`;
-
-const StyledCountryCardDetailsItemValue = styled.dd`
-  font-weight: 300;
-  margin: 0;
-  display: inline;
-`;
-
 const CountryCard = props => {
   const { countryCode, countryName, countryFlag, countryDetails } = props;
   return (
@@ -65,23 +43,7 @@ const CountryCard = props => {
         </StyledCountryCardImagery>
         <StyledCountryCardInner>
           <StyledCountryCardTitle>{countryName}</StyledCountryCardTitle>
-          <StyledCountryCardDetails>
-            {countryDetails.map(detail => {
-              return (
-                <StyledCountryCardDetail key={detail.key}>
-                  <StyledCountryCardDetailsItemKey>
-                    {detail.key}
-                    {': '}
-                  </StyledCountryCardDetailsItemKey>
-                  <StyledCountryCardDetailsItemValue>
-                    {detail.number
-                      ? detail.val.toLocaleString('en-GB')
-                      : detail.val}
-                  </StyledCountryCardDetailsItemValue>
-                </StyledCountryCardDetail>
-              );
-            })}
-          </StyledCountryCardDetails>
+          <Details details={countryDetails} />
         </StyledCountryCardInner>
       </StyledCountryCard>
     </Link>
