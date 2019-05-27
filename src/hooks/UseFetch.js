@@ -13,7 +13,7 @@ const UseFetch = url => {
 
   useEffect(() => {
     fetchUrl();
-  });
+  }, []);
 
   return [data, loading];
 };
