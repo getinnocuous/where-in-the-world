@@ -1,13 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
+import Global from '../Global';
+import UseFetch from '../hooks/UseFetch';
 import CountriesContext from '../context/CountriesContext';
 import Button from './Button';
 
+
 const StyledCountryPage = styled.main`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 75px;
+  grid-template-columns: 1fr;
+  grid-gap: 40px;
   margin-top: 5rem;
+  @media screen and (min-width: 992px) {
+    grid-gap: 75px;
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const StyledCountryPageHeading = styled.h1`
@@ -18,9 +25,14 @@ const StyledCountryPageHeading = styled.h1`
 `;
 
 const StyledCountryPageFlag = styled.div`
+  height: 230px;
   width: 100%;
-  height: 400px;
-  max-width: 560px;
+  @media screen and (min-width: 768px) {
+    height: 400px;
+  }
+  @media screen and (min-width: 992px) {
+    max-width: 560px;
+  }
   img {
     width: 100%;
     height: 100%;
@@ -36,20 +48,51 @@ const StyledCountryPageDetails = styled.article`
 
 const StyledCountryPageBorders = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  @media screen and (min-width: 992px) {
+    flex-wrap: nowrap;
+  }
+`;
+
+const StyledCountryPageBordersList = styled.ul`
+  display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  margin: -1rem;
+  padding: 0;
+  list-style: none;
+`;
+
+const StyledCountryPageBordersListItem = styled.li`
+  padding: 0.5rem;
+`;
+
+const StyledCountryPageBordersLabel = styled.p`
   font-size: 1.6rem;
+  color: var(--text);
+  margin: 0 2rem 0 0;
+  align-self: flex-start;
+  flex-shrink: 0;
+  width: 100%;
+  margin-bottom: 2rem;
+  @media screen and (min-width: 992px) {
+    width: auto;
+    margin-bottom: 0;
+  }
 `;
 
 const CountryPage = ({ match }) => {
-  const [country, setCountry] = useState({});
   const countryID = match.params.id.toUpperCase();
-  const { countries, loadingData } = useContext(CountriesContext);
-  useEffect(() => {
-    const selectedCountry = countries.findIndex(
-      country => country.alpha3Code === countryID
+  const [country, loadingCountryData] = UseFetch(`${Global.API}/alpha/${countryID}`, countryID);
+  const { countryNames, loadingData } = useContext(CountriesContext);
+
+  const getCountryName = name => {
+    const selectedCountry = countryNames.findIndex(
+      targetCountry => targetCountry.alpha3Code === name
     );
-    setCountry(countries[selectedCountry]);
-  }, [countries, countryID]);
+    return countryNames[selectedCountry].name;
+  };
+
   return (
     <React.Fragment>
       <Button to={'/'} text={'Home'} />
@@ -61,17 +104,24 @@ const CountryPage = ({ match }) => {
             <img src={country.flag} alt={`Flag of ${country.name}`} />
           </StyledCountryPageFlag>
           <StyledCountryPageDetails>
-            <StyledCountryPageHeading>{country.name}</StyledCountryPageHeading>
+            <StyledCountryPageHeading>
+              {country.name}
+            </StyledCountryPageHeading>
             {country.borders ? (
               <StyledCountryPageBorders>
-                <p>Border countries:</p>
-                {country.borders.map(border => (
-                  <Button
-                    key={border}
-                    to={`/country/${border}`}
-                    text={border}
-                  />
-                ))}
+                <StyledCountryPageBordersLabel>
+                  Border countries:{' '}
+                </StyledCountryPageBordersLabel>
+                <StyledCountryPageBordersList>
+                  {country.borders.map(border => (
+                    <StyledCountryPageBordersListItem key={border}>
+                      <Button
+                        to={`/country/${border}`}
+                        text={getCountryName(border)}
+                      />
+                    </StyledCountryPageBordersListItem>
+                  ))}
+                </StyledCountryPageBordersList>
               </StyledCountryPageBorders>
             ) : null}
           </StyledCountryPageDetails>

@@ -19,7 +19,13 @@ function App() {
         <CountriesContext.Provider
           value={{
             loadingData: loadingData,
-            countries: countriesData
+            countries: countriesData,
+            countryNames: countriesData.map(country => {
+              return {
+                alpha3Code: country.alpha3Code,
+                name: country.name
+              };
+            })
           }}
         >
           <Navbar />

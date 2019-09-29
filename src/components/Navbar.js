@@ -16,10 +16,12 @@ const StyledNavbarInner = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
 `;
 
 const StyledNavbarHeading = styled.h1`
